@@ -1,0 +1,21 @@
+Sam Ortiz
+SYNTHETIC EVALUATION RESUME — fictional person
+sam.ortiz@example.com | Portland, OR
+
+EXPERIENCE
+Frontend Engineer  Mar 2023 – Present
+Lumafield Commerce  Remote
+• Built accessible storefront pages in React and TypeScript used by 200 merchants
+• Migrated the marketing site to Next.js with server rendering and Tailwind CSS
+• Wrote Jest unit tests and Playwright end-to-end tests that run in GitHub Actions
+Software Engineer  Jul 2021 – Feb 2023
+Brightfold Media  Portland, OR
+• Developed JavaScript UI components and Node.js / Express.js REST APIs backed by PostgreSQL
+• Added a GraphQL layer for the mobile team
+
+EDUCATION
+Westbrook State University  Portland, OR
+Bachelor of Science in Computer Science  Aug 2017 – May 2021
+
+SKILLS
+JavaScript, TypeScript, React, Next.js, HTML, CSS, Node.js, Express.js, GraphQL, PostgreSQL, Jest, Git

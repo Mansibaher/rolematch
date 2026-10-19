@@ -23,19 +23,24 @@ from app.core.config import get_settings
 from app.services.skills import Taxonomy, get_taxonomy
 from app.services.text_safety import find_instruction_like_text
 
-EXTRACTION_VERSION = "4"
+EXTRACTION_VERSION = "5"
 
 HEADINGS: list[tuple[str, str]] = [
     # Order matters: preferred before generic "qualifications".
-    ("preferred", r"preferred|nice[- ]to[- ]haves?|bonus(?: points)?|pluses?|it'?s a plus|desired|additional qualifications|ideally|extra credit|good to have"),
-    ("other", r"about (?:us|the company|the team|[A-Z]\w+)|benefits|perks|compensation|salary|pay range|equal (?:employment )?opportunity|who we are|why join|our values|what we offer|life at|accommodations?|eeo|privacy"),
+    ("preferred", r"preferred|you (?:might|may) also have|nice[- ]to[- ]haves?|bonus(?: points)?|pluses?|it'?s a plus|desired|additional qualifications|ideally|extra credit|good to have"),
+    ("responsibility", r"about (?:the|this) (?:role|job|position|opportunity)"),
+    ("other", r"about (?!you\b|the role|this role|the job|the position|the opportunity)\w+|benefits|perks|compensation|salary|pay range|equal (?:employment )?opportunity|who we are|why join|our values|what we offer|life at|accommodations?|eeo|privacy"),
     ("responsibility", r"responsibilit|what you'?ll do|what you will do|in this role|the role|day[- ]to[- ]day|your impact|you will|what you'?ll work on|the opportunity|key duties|your mission|job duties"),
     ("required", r"minimum|basic qualifications|required|requirements|qualifications|must[- ]haves?|what you'?ll (?:need|bring)|what we'?re looking for|you (?:have|bring|are|might be)|who you are|about you|skills (?:and|&) experience|experience you'?ll need|what you need|you should have|your background|we'?re looking for"),
 ]
-_HEADING_RX = [(k, re.compile(rf"(?i)^\W*(?:{p})")) for k, p in HEADINGS]
+# Up to two leading words are allowed ("Key qualifications", "Our requirements").
+_HEADING_RX = [(k, re.compile(rf"(?i)^\W*(?:[a-z]+\s+){{0,2}}(?:{p})")) for k, p in HEADINGS]
+INLINE_HEADING_RX = re.compile(r"^\W*([A-Za-z' &/]{3,40}?)\s*:\s+(\S.{14,})$")
+LIST_MARKER_RX = re.compile(r"^(\s*)(?:[-*–]|\d{1,2}[.)])\s+", re.M)
+SENTENCE_RX = re.compile(r".+?(?:[.!?](?=\s+[A-Z0-9“\"(])|$)", re.S)
 
 PREFERRED_CUE = re.compile(r"(?i)\b(preferred|nice to have|nice-to-have|is a plus|are a plus|a plus\b|bonus|ideally|desirable|desired|not required|optional)\b")
-REQUIRED_CUE = re.compile(r"(?i)\b(required|must have|must be|must possess|minimum of|at least|you have|you'?ll need|requires?)\b")
+REQUIRED_CUE = re.compile(r"(?i)\b(required|must have|must be|must possess|minimum of|at least|you have|you should|you'?ll need|requires?)\b")
 ANY_OF_CUE = re.compile(r"(?i)\b(or|such as|e\.g\.|for example|like|one of|one or more of|at least one|any of|similar)\b|/")
 YEARS_RX = re.compile(r"(?i)(\d{1,2})(?:\s*(?:-|–|to)\s*(\d{1,2}))?\s*\+?\s*(?:years?|yrs?)\b(?!\s+old)")
 DEGREE_RX = re.compile(r"(?i)\b(ph\.?\s?d|doctorate|master'?s?|m\.?s\.?(?=[\s,/)])|msc|bachelor'?s?|b\.?s\.?(?=[\s,/)])|b\.?a\.?(?=[\s,/)])|bsc|undergraduate|graduate degree|degree)\b")
@@ -148,6 +153,8 @@ def _heading_kind(line: str) -> str | None:
 
 def _items(text: str) -> list[tuple[str, int, int, str | None]]:
     """Yield (item_text, start, end, section_kind) for bullet lines and sentences, tracking headings."""
+    # Normalise plain-text list markers ("- ", "* ", "1. ") to bullets; same length keeps offsets aligned.
+    text = LIST_MARKER_RX.sub(lambda m: m.group(1) + "•" + " " * (len(m.group(0)) - len(m.group(1)) - 1), text)
     out: list[tuple[str, int, int, str | None]] = []
     pos = 0
     section: str | None = None
@@ -158,25 +165,31 @@ def _items(text: str) -> list[tuple[str, int, int, str | None]]:
         if not line:
             continue
         hk = _heading_kind(line)
-        if hk is not None:
+        body_start = start + (len(raw) - len(raw.lstrip()))
+        body = line
+        if hk is None:
+            m = INLINE_HEADING_RX.match(line)
+            if m and not line.startswith("•"):
+                hk2 = _heading_kind(m.group(1))
+                if hk2 is not None:
+                    section = hk2
+                    body = m.group(2).strip()
+                    body_start = start + raw.index(body)
+        elif hk is not None:
             section = hk
-            # "Requirements: 3+ years Python" style headings with content on the same line
-            if ":" in line and len(line.split(":", 1)[1].strip()) > 15:
-                rest = line.split(":", 1)[1].strip()
-                off = start + raw.index(rest)
-                out.append((rest, off, off + len(rest), section))
             continue
-        body = re.sub(r"^•\s*", "", line)
-        offset = start + raw.index(body) if body in raw else start
-        sentences = list(re.finditer(r"[^.!?]+(?:[.!?]+(?=\s|$)|$)", body))
-        if line.startswith("•") or len(sentences) <= 1:
-            out.append((body, offset, offset + len(body), section))
-        else:
-            for m in sentences:
-                sent = m.group(0).strip()
-                if len(sent) > 12:
-                    s_off = offset + m.start() + (len(m.group(0)) - len(m.group(0).lstrip()))
-                    out.append((sent, s_off, s_off + len(sent), section))
+        if hk is None and line.endswith(":") and len(line) <= 60 and not line.startswith("•"):
+            continue  # an unrecognised heading: not itself a requirement
+        if body.startswith("•"):
+            stripped = re.sub(r"^•\s*", "", body)
+            off = body_start + (len(body) - len(stripped))
+            out.append((stripped, off, off + len(stripped), section))
+            continue
+        for m in SENTENCE_RX.finditer(body):
+            sent = m.group(0).strip()
+            if len(sent) > 6:
+                s_off = body_start + m.start() + (len(m.group(0)) - len(m.group(0).lstrip()))
+                out.append((sent, s_off, s_off + len(sent), section))
     return out
 
 

@@ -1,0 +1,73 @@
+# Held-out extraction set. Written after the first evaluation run exposed extraction bugs on
+# extraction_gold.yaml and BEFORE those bugs were fixed, so this set measures the fixed extractor on postings
+# that did not influence the fixes. Synthetic postings.
+postings:
+  - id: hx-01
+    title: Software Engineer, Payments
+    text: |
+      About the role
+      Our payments team moves money for 10,000 merchants.
+
+      Qualifications
+      • 2+ years of professional experience with Java or Kotlin
+      • Experience designing REST APIs
+      • Experience with MySQL is a plus
+      Extra credit
+      • Experience with Kafka
+    gold:
+      - {phrase: "Java or Kotlin", kind: required}
+      - {phrase: "designing REST APIs", kind: required}
+      - {phrase: "MySQL", kind: preferred}
+      - {phrase: "Kafka", kind: preferred}
+  - id: hx-02
+    title: ML Engineer
+    text: |
+      About you: You have shipped machine learning models with scikit-learn or XGBoost. You know SQL. Familiarity with Airflow would be nice to have.
+    gold:
+      - {phrase: "scikit-learn or XGBoost", kind: required}
+      - {phrase: "You know SQL", kind: required}
+      - {phrase: "Airflow", kind: preferred}
+  - id: hx-03
+    title: Data Platform Engineer
+    text: |
+      Must haves
+      - 5+ years with Python
+      - Hands-on Spark experience
+      Good to have
+      - Experience with Terraform
+      - Experience with GCP
+    gold:
+      - {phrase: "5+ years with Python", kind: required}
+      - {phrase: "Spark", kind: required}
+      - {phrase: "Terraform", kind: preferred}
+      - {phrase: "GCP", kind: preferred}
+  - id: hx-04
+    title: Frontend Developer
+    text: |
+      The ideal candidate has strong React.js and TypeScript skills and has worked with Next.js. Experience with Storybook or Figma is a bonus.
+    gold:
+      - {phrase: "React.js and TypeScript", kind: required}
+      - {phrase: "Storybook or Figma", kind: preferred}
+  - id: hx-05
+    title: Backend Engineer II
+    text: |
+      Requirements
+      1. 3+ years of experience with Go
+      2. Experience with gRPC
+      3. Experience with Redis (preferred)
+    gold:
+      - {phrase: "3+ years of experience with Go", kind: required}
+      - {phrase: "gRPC", kind: required}
+      - {phrase: "Redis", kind: preferred}
+  - id: hx-06
+    title: Applied Scientist
+    text: |
+      Key qualifications
+      • PhD in Computer Science, Statistics or a related field
+      • Publications in NLP or information retrieval
+      Preferred
+      • Experience with large language models
+    gold:
+      - {phrase: "PhD in Computer Science", kind: required}
+      - {phrase: "Publications in NLP", kind: required}
+      - {phrase: "large language models", kind: preferred}

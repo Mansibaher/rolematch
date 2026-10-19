@@ -1,0 +1,81 @@
+# Graded relevance labels for the RoleMatch offline evaluation.
+#
+# Authored by the system's developer from the posting text and persona resumes, BEFORE the first evaluation
+# run. That is a known source of bias (the labeller knows how the system works); treat results as a sanity
+# check on synthetic data, not as evidence about real job-search outcomes.
+#
+# Grades measure qualification fit only (eligibility, location and sponsorship are evaluated separately as
+# hard-filter checks):
+#   3 – strong fit: meets essentially all required qualifications at the right level
+#   2 – good fit: meets most required qualifications; minor gaps
+#   1 – stretch: relevant domain but notable gaps or a clear level mismatch
+#   0 – not a fit: different domain/stack, or a requirement the persona plainly cannot meet
+#       (e.g. "currently enrolled" for a graduate)
+# Unlisted jobs are grade 0.
+#
+# Splits: each job in fixtures/jobs/synthetic_jobs.json carries "split": tune | heldout. Weight or rule
+# changes may only be motivated by the tune split; the held-out split is reported once.
+#
+# Known leakage: during development the author inspected the demo persona's (jordan) ranking over all 36 jobs
+# and fixed two extraction bugs because of it (domain-aware experience years; sentence splitting). The other
+# four personas were written after those fixes.
+
+rubric_version: 1
+personas:
+  jordan_backend_ml:
+    fx-001: 3
+    fx-002: 2
+    fx-003: 2
+    fx-004: 1
+    fx-005: 1
+    fx-006: 1
+    fx-009: 2
+    fx-010: 1
+    fx-014: 2
+    fx-017: 3
+    fx-020: 1
+    fx-022: 2
+    fx-023: 3
+    fx-025: 2
+    fx-027: 1
+    fx-029: 1
+    fx-032: 2
+    fx-034: 1
+    fx-035: 1
+    fx-036: 1
+  sam_frontend:
+    fx-005: 3
+    fx-011: 2
+    fx-017: 1
+    fx-032: 2
+  riya_data_engineer:
+    fx-001: 1
+    fx-006: 3
+    fx-012: 3
+    fx-015: 2
+    fx-022: 1
+    fx-028: 3
+    fx-035: 3
+    fx-036: 2
+  chen_ml_student:
+    fx-003: 1
+    fx-008: 2
+    fx-009: 1
+    fx-013: 1
+    fx-014: 1
+    fx-023: 1
+    fx-027: 2
+    fx-033: 3
+  marcus_java_senior:
+    fx-001: 1
+    fx-002: 3
+    fx-004: 3
+    fx-007: 1
+    fx-010: 3
+    fx-012: 1
+    fx-016: 1
+    fx-019: 1
+    fx-026: 1
+    fx-029: 1
+    fx-034: 3
+    fx-036: 1

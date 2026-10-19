@@ -1,0 +1,27 @@
+Chen Wei
+SYNTHETIC EVALUATION RESUME — fictional person
+chen.wei@example.com | Boston, MA
+
+EDUCATION
+Harborview Institute of Technology  Boston, MA
+Master of Science in Computer Science (Machine Learning)  Sep 2025 – May 2027
+Coursework: deep learning, natural language processing, algorithms and data structures
+Riverside University  Boston, MA
+Bachelor of Science in Mathematics  Sep 2021 – May 2025
+
+EXPERIENCE
+Machine Learning Research Intern  Jun 2025 – Aug 2025
+Quill Robotics Lab  Cambridge, MA
+• Fine-tuned Hugging Face Transformers models in PyTorch for text classification
+• Evaluated models with cross-validation and reported results to the research team
+
+PROJECTS
+Clinical Notes NER | PyTorch, Hugging Face  Dec 2025
+• Built a named entity recognition model for de-identified clinical notes
+Course Q&A Assistant | Python, LLMs, RAG  Mar 2026
+• Built a retrieval-augmented generation assistant over lecture notes using embeddings
+Plant Disease Classifier | TensorFlow  May 2025
+• Trained an image classification model with TensorFlow and Keras (computer vision)
+
+SKILLS
+Python, PyTorch, TensorFlow, scikit-learn, NLP, SQL, Git

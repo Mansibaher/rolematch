@@ -1,0 +1,21 @@
+Riya Kapoor
+SYNTHETIC EVALUATION RESUME — fictional person
+riya.kapoor@example.com | Austin, TX
+
+EXPERIENCE
+Senior Data Engineer  Jan 2023 – Present
+Northwind Analytics  Austin, TX
+• Built batch ETL pipelines in Python and Spark orchestrated with Airflow on AWS (S3, Glue)
+• Designed dimensional data models in Snowflake and maintained dbt models used by 40 analysts
+• Ran Spark Structured Streaming jobs consuming Kafka topics for near-real-time dashboards
+Data Engineer  Jun 2019 – Dec 2022
+Cobalt Freight Data  Dallas, TX
+• Wrote Scala Spark jobs over Hive tables on a Hadoop cluster
+• Owned SQL data quality checks and data modeling for the shipments warehouse
+
+EDUCATION
+Lakeshore University  Chicago, IL
+Bachelor of Science in Information Systems  Aug 2015 – May 2019
+
+SKILLS
+SQL, Python, Scala, Spark, Airflow, Kafka, dbt, Snowflake, AWS, Hadoop, data modeling

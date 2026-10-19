@@ -1,0 +1,21 @@
+Marcus Bell
+SYNTHETIC EVALUATION RESUME — fictional person
+marcus.bell@example.com | Chicago, IL
+
+EXPERIENCE
+Senior Software Engineer  Feb 2020 – Present
+Granary Payments  Chicago, IL
+• Lead engineer for Java Spring Boot microservices processing card payments
+• Designed Kafka event pipelines and tuned multithreading and concurrency in the settlement engine
+• Deployed services with Docker and Kubernetes on AWS; on-call for distributed systems incidents
+Software Engineer  Jun 2015 – Jan 2020
+Lakefront Insurance  Chicago, IL
+• Built Java services over Oracle Database and PostgreSQL with complex SQL
+• Maintained Linux build servers and REST APIs for policy systems
+
+EDUCATION
+Midwest Technical University  Chicago, IL
+Bachelor of Science in Computer Engineering  Aug 2011 – May 2015
+
+SKILLS
+Java, Spring Boot, Kafka, SQL, Oracle Database, PostgreSQL, Linux, Docker, Kubernetes, AWS

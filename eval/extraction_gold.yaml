@@ -1,0 +1,111 @@
+# Hand-labelled requirement-extraction set. Postings are synthetic and deliberately vary in structure.
+# Each gold item is identified by a distinctive phrase that must appear in the extracted requirement text.
+# kind: required | preferred
+postings:
+  - id: ex-01
+    title: Backend Engineer
+    text: |
+      What we're looking for
+      • 3+ years building backend services
+      • Strong Go or Python
+      • Experience with PostgreSQL
+      Bonus points
+      • Experience with Kubernetes
+      • Open-source contributions
+    gold:
+      - {phrase: "3+ years building backend", kind: required}
+      - {phrase: "Strong Go or Python", kind: required}
+      - {phrase: "Experience with PostgreSQL", kind: required}
+      - {phrase: "Experience with Kubernetes", kind: preferred}
+      - {phrase: "Open-source contributions", kind: preferred}
+  - id: ex-02
+    title: Data Engineer
+    text: |
+      You have:
+      - Solid SQL and Python
+      - Experience with Airflow or Dagster
+      - Familiarity with dbt is nice to have
+      You might also have:
+      - Exposure to Spark
+    gold:
+      - {phrase: "Solid SQL and Python", kind: required}
+      - {phrase: "Airflow or Dagster", kind: required}
+      - {phrase: "Familiarity with dbt", kind: preferred}
+      - {phrase: "Exposure to Spark", kind: preferred}
+  - id: ex-03
+    title: Machine Learning Engineer
+    text: |
+      About the role
+      You'll train and ship ranking models.
+
+      Requirements: MS or PhD in Computer Science or a related field, 2+ years of experience with PyTorch, and experience deploying models to production. Experience with recommender systems is a plus.
+    gold:
+      - {phrase: "MS or PhD", kind: required}
+      - {phrase: "PyTorch", kind: required}
+      - {phrase: "deploying models", kind: required}
+      - {phrase: "recommender systems", kind: preferred}
+  - id: ex-04
+    title: Software Engineer
+    text: |
+      We're a small team. You should know TypeScript and React well. Knowing Node.js is required. Experience with GraphQL is a bonus, and AWS experience is preferred.
+    gold:
+      - {phrase: "TypeScript and React", kind: required}
+      - {phrase: "Node.js is required", kind: required}
+      - {phrase: "GraphQL", kind: preferred}
+      - {phrase: "AWS experience", kind: preferred}
+  - id: ex-05
+    title: Platform Engineer
+    text: |
+      Basic Qualifications
+      • Bachelor's degree in Computer Science or equivalent experience
+      • 4+ years of experience with Linux
+      • Experience with Terraform
+      Preferred Qualifications
+      • Experience with AWS
+      • Experience with Go
+    gold:
+      - {phrase: "Bachelor's degree", kind: required}
+      - {phrase: "4+ years of experience with Linux", kind: required}
+      - {phrase: "Experience with Terraform", kind: required}
+      - {phrase: "Experience with AWS", kind: preferred}
+      - {phrase: "Experience with Go", kind: preferred}
+  - id: ex-06
+    title: Full Stack Engineer
+    text: |
+      Who you are
+      • Experienced with Java and Spring Boot
+      • Comfortable with SQL databases
+      • Kafka experience is a plus
+      Nice to have
+      • Experience with Docker
+    gold:
+      - {phrase: "Java and Spring Boot", kind: required}
+      - {phrase: "SQL databases", kind: required}
+      - {phrase: "Kafka experience", kind: preferred}
+      - {phrase: "Experience with Docker", kind: preferred}
+  - id: ex-07
+    title: Analytics Engineer
+    text: |
+      In this role you will
+      • Build dbt models
+      • Partner with finance
+      Minimum Qualifications
+      • 2+ years of experience in analytics engineering
+      • Expert SQL
+      Desired skills
+      • Experience with Looker or Tableau
+    gold:
+      - {phrase: "2+ years of experience in analytics", kind: required}
+      - {phrase: "Expert SQL", kind: required}
+      - {phrase: "Looker or Tableau", kind: preferred}
+  - id: ex-08
+    title: iOS Engineer
+    text: |
+      Requirements
+      * 3+ years of iOS development with Swift
+      * Experience with SwiftUI (preferred)
+      * Familiarity with CI/CD
+    gold:
+      - {phrase: "3+ years of iOS", kind: required}
+      - {phrase: "SwiftUI", kind: preferred}
+      - {phrase: "CI/CD", kind: required}
