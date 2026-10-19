@@ -144,7 +144,7 @@ def deadline_dict(d: Deadline, user_tz: str, now: datetime) -> dict:
         "application_id": str(d.application_id),
         "kind": d.kind,
         "title": d.title,
-        "due_at_utc": d.due_at.isoformat(),
+        "due_at_utc": d.due_at.astimezone(UTC).isoformat(),
         "due_local": local.isoformat(),
         "due_local_display": local.strftime("%a %b %-d, %-I:%M %p ") + (local.tzname() or ""),
         "entered_tz": d.tz_name,

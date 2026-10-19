@@ -23,7 +23,7 @@ from app.core.config import get_settings
 from app.services.skills import Taxonomy, get_taxonomy
 from app.services.text_safety import find_instruction_like_text
 
-EXTRACTION_VERSION = "3"
+EXTRACTION_VERSION = "4"
 
 HEADINGS: list[tuple[str, str]] = [
     # Order matters: preferred before generic "qualifications".
@@ -168,10 +168,11 @@ def _items(text: str) -> list[tuple[str, int, int, str | None]]:
             continue
         body = re.sub(r"^•\s*", "", line)
         offset = start + raw.index(body) if body in raw else start
-        if line.startswith("•") or len(body) < 220:
+        sentences = list(re.finditer(r"[^.!?]+(?:[.!?]+(?=\s|$)|$)", body))
+        if line.startswith("•") or len(sentences) <= 1:
             out.append((body, offset, offset + len(body), section))
         else:
-            for m in re.finditer(r"[^.!?]+(?:[.!?]+|$)", body):
+            for m in sentences:
                 sent = m.group(0).strip()
                 if len(sent) > 12:
                     s_off = offset + m.start() + (len(m.group(0)) - len(m.group(0).lstrip()))

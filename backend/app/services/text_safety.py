@@ -31,3 +31,23 @@ def find_instruction_like_text(text: str, limit: int = 10) -> list[dict]:
         if len(out) >= limit:
             break
     return out
+
+
+def strip_instruction_like_sentences(text: str) -> str:
+    """Remove whole sentences that contain instruction-like text, so they cannot influence extraction or embeddings."""
+    flags = find_instruction_like_text(text, limit=50)
+    if not flags:
+        return text
+    cut: list[tuple[int, int]] = []
+    for f in flags:
+        a = max(text.rfind(". ", 0, f["start"]) + 1, text.rfind("\n", 0, f["start"]) + 1, 0)
+        ends = [i for i in (text.find(". ", f["end"]), text.find("\n", f["end"])) if i != -1]
+        b = (min(ends) + 1) if ends else len(text)
+        cut.append((a, b))
+    out, pos = [], 0
+    for a, b in sorted(cut):
+        if a > pos:
+            out.append(text[pos:a])
+        pos = max(pos, b)
+    out.append(text[pos:])
+    return "".join(out)

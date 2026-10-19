@@ -12,7 +12,8 @@ from app.core.config import get_settings
 
 @lru_cache
 def get_engine() -> Engine:
-    return create_engine(get_settings().database_url, pool_pre_ping=True, future=True)
+    # Sessions run in UTC so every timestamp leaving the API is UTC-normalised.
+    return create_engine(get_settings().database_url, pool_pre_ping=True, connect_args={"options": "-c timezone=utc"})
 
 
 @lru_cache

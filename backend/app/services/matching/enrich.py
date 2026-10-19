@@ -10,10 +10,18 @@ from app.models import Job
 from app.services.embeddings.backend import embed_long_text, get_embedder
 from app.services.embeddings.store import pack
 from app.services.matching.requirements import EXTRACTION_VERSION, extract
+from app.services.text_safety import find_instruction_like_text, strip_instruction_like_sentences
 
 
 def enrich_job(job: Job) -> None:
-    ex = extract(job.title, job.description_text)
+    # Instruction-like sentences are flagged for the user but removed before extraction and embedding, so
+    # text aimed at automated screeners cannot change requirements, evidence or similarity.
+    flags = find_instruction_like_text(job.description_text)
+    clean = strip_instruction_like_sentences(job.description_text)
+    ex = extract(job.title, clean)
+    ex.instruction_like_text = flags
+    if flags and not any("instruction-like" in w for w in ex.warnings):
+        ex.warnings.append("The posting contains instruction-like text. It was ignored for matching.")
     data = ex.to_dict()
     emb = get_embedder()
     texts = [r.text for r in ex.requirements]
@@ -25,7 +33,7 @@ def enrich_job(job: Job) -> None:
     data["embedding_model"] = emb.name
     job.extraction = data
     job.extraction_version = EXTRACTION_VERSION
-    job.embedding = embed_long_text(f"{job.title}\n{job.description_text}", emb).tolist()
+    job.embedding = embed_long_text(f"{job.title}\n{clean}", emb).tolist()
     job.embedding_model = emb.name
 
 

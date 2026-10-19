@@ -273,6 +273,18 @@ def evaluate_requirement(req: dict, prof: ProfileContext, req_vec: np.ndarray | 
         if not skills and domain["kind"] == "unrecognized":
             r.notes.append(f"Checked total professional experience; whether it counts as “{domain['phrase']}” experience could not be verified.")
         if skill_months is not None and skills:
+            levels = {sk: _skill_status(sk, prof, implied_factor) for sk in skills}
+            r.matched_skills = [sk for sk, v in levels.items() if v[0] != "none"]
+            r.missing_skills = [sk for sk, v in levels.items() if v[0] == "none"]
+            if not r.matched_skills:
+                r.status = "not_evidenced"
+                r.evidence = []
+                r.notes.append(f"No evidence of {', '.join(tax.name(sk) for sk in skills)} on the resume.")
+                r.related = _related(req_vec, prof, threshold)
+                if r.related:
+                    r.status = "unclear"
+                    r.notes.append("A related resume line was found by semantic similarity. Review it — similarity is not proof.")
+                return r
             if skill_months >= need:
                 r.status = "supported"
                 r.notes.append(f"About {yrs(skill_months)} years in roles that mention {', '.join(tax.name(s) for s in skills)}.")
