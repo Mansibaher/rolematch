@@ -72,6 +72,7 @@ export default function JobsPage() {
   const [status, setStatus] = useState("");
   const [q, setQ] = useState("");
   const [showExcluded, setShowExcluded] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [feed, setFeed] = useState<Feed | null>(null);
   const [error, setError] = useState<{ status: number; message: string } | null>(null);
   const [loading, setLoading] = useState(true);
@@ -113,7 +114,10 @@ export default function JobsPage() {
         Ranked by application priority: qualification match, your preferences and posting freshness. Scores describe documented fit, not your chance of an interview.
       </PageHeader>
 
-      <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5" role="search">
+      <button type="button" className="mb-3 rounded-md border border-rule-strong bg-panel px-3 py-1.5 text-sm sm:hidden" aria-expanded={filtersOpen} aria-controls="job-filters" onClick={() => setFiltersOpen((v) => !v)}>
+        {filtersOpen ? "Hide filters" : "Filters and sorting"}
+      </button>
+      <div id="job-filters" className={cx("mb-5 gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-5", filtersOpen ? "grid" : "hidden")} role="search">
         <label className="text-sm">Sort by
           <Select value={sort} onChange={(e) => setSort(e.target.value)} className="mt-1">
             <option value="priority">Application priority</option>

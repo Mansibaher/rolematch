@@ -1,0 +1,78 @@
+# Full local stack: Postgres + pgvector, Redis, API, Celery worker + beat, Next.js web.
+#   cp .env.example .env && docker compose up --build
+#   then: docker compose exec api python -m app.cli seed      (demo account + fixtures)
+# Open http://localhost:3000
+name: rolematch
+
+x-backend-env: &backend-env
+  ROLEMATCH_ENVIRONMENT: ${ROLEMATCH_ENVIRONMENT:-development}
+  ROLEMATCH_DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-rolematch}:${POSTGRES_PASSWORD:-rolematch}@db:5432/${POSTGRES_DB:-rolematch}
+  ROLEMATCH_REDIS_URL: redis://redis:6379/0
+  ROLEMATCH_COOKIE_SECURE: ${ROLEMATCH_COOKIE_SECURE:-false}
+  ROLEMATCH_CORS_ORIGINS: '["http://localhost:3000"]'
+  ROLEMATCH_USER_AGENT: ${ROLEMATCH_USER_AGENT:-RoleMatch/0.1 (personal job-search tool)}
+  ROLEMATCH_LLM_PROVIDER: ${ROLEMATCH_LLM_PROVIDER:-none}
+  ROLEMATCH_LLM_API_KEY: ${ROLEMATCH_LLM_API_KEY:-}
+  ROLEMATCH_LLM_MODEL: ${ROLEMATCH_LLM_MODEL:-}
+
+services:
+  db:
+    image: pgvector/pgvector:0.8.0-pg16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-rolematch}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rolematch}
+      POSTGRES_DB: ${POSTGRES_DB:-rolematch}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rolematch}"]
+      interval: 5s
+      retries: 20
+
+  redis:
+    image: redis:7.4-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 20
+
+  api:
+    build: { context: ., dockerfile: backend/Dockerfile }
+    environment: *backend-env
+    command: sh -c "python -m app.cli migrate && uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers"
+    volumes: [uploads:/app/var/uploads]
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 10s
+      retries: 30
+    ports: ["8000:8000"]
+
+  worker:
+    build: { context: ., dockerfile: backend/Dockerfile }
+    environment: *backend-env
+    command: celery -A app.workers.celery_app worker -Q ingest,celery --concurrency 2 --loglevel INFO
+    volumes: [uploads:/app/var/uploads]
+    depends_on:
+      api: { condition: service_healthy }
+
+  beat:
+    build: { context: ., dockerfile: backend/Dockerfile }
+    environment: *backend-env
+    command: celery -A app.workers.celery_app beat --loglevel INFO --schedule /tmp/celerybeat-schedule
+    depends_on:
+      api: { condition: service_healthy }
+
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args: { ROLEMATCH_BACKEND_URL: http://api:8000 }
+    depends_on:
+      api: { condition: service_healthy }
+    ports: ["3000:3000"]
+
+volumes:
+  pgdata:
+  uploads:

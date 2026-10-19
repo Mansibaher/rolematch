@@ -36,8 +36,9 @@ DEMO_PASSWORD = "demo-password-123"  # local demo only; documented in README
 
 
 def migrate() -> None:
-    from alembic import command
     from alembic.config import Config
+
+    from alembic import command
 
     cfg = Config(str(REPO_ROOT / "backend" / "alembic.ini"))
     cfg.set_main_option("script_location", str(REPO_ROOT / "backend" / "alembic"))

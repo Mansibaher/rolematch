@@ -19,11 +19,11 @@ os.environ.setdefault("ROLEMATCH_EMBEDDING_BACKEND", "hashing")
 os.environ.setdefault("ROLEMATCH_CELERY_EAGER", "true")
 
 import pytest  # noqa: E402
-from alembic import command  # noqa: E402
 from alembic.config import Config  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
 from sqlalchemy import text  # noqa: E402
 
+from alembic import command  # noqa: E402
 from app.core.config import get_settings  # noqa: E402
 from app.db.session import get_engine, get_sessionmaker  # noqa: E402
 

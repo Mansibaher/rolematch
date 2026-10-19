@@ -15,11 +15,11 @@ Known quirk: the endpoint can intermittently return HTML; the HTTP client retrie
 
 from __future__ import annotations
 
+from app.core.config import get_settings
 from app.services.jobs.adapters.base import FetchResult, parse_epoch_ms
 from app.services.jobs.http import Counter, SourceError, get_json, make_client
 from app.services.jobs.normalize import NormalizedJob, Salary, finish, html_to_text
 from app.services.url_safety import IDENT_RX, JOB_ID_RX, canonicalize_url
-from app.core.config import get_settings
 
 PAGE = 100
 

@@ -203,9 +203,9 @@ def test_removing_a_skill_changes_matching(demo, db):
 
 
 def test_semantic_similarity_never_marks_supported(demo, db):
+    from app.models import Preferences, ResumeVersion
     from app.services.matching.engine import scoring_config
     from app.services.matching.profile import build_profile
-    from app.models import Preferences, ResumeVersion
     from tests.helpers import user_by_email
 
     user = user_by_email(db, "user@example.com")
