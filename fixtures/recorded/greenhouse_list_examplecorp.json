@@ -1,0 +1,105 @@
+{
+  "jobs": [
+    {
+      "id": 4001001,
+      "internal_job_id": 4000001,
+      "title": "Backend Engineer",
+      "updated_at": "2026-10-17T12:30:00-04:00",
+      "requisition_id": "R1001",
+      "location": {
+        "name": "San Francisco, CA"
+      },
+      "absolute_url": "https://job-boards.greenhouse.io/examplecorp/jobs/4001001",
+      "language": "en",
+      "metadata": null,
+      "first_published": "2026-10-15T09:00:00-04:00",
+      "company_name": "ExampleCorp",
+      "content": "&lt;h2&gt;About the role&lt;/h2&gt;&lt;p&gt;Build APIs for our scheduling product.&lt;/p&gt;&lt;h3&gt;Requirements&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;3+ years of experience with Python&lt;/li&gt;&lt;li&gt;Experience with PostgreSQL&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;Nice to have&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Experience with Kubernetes&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;The salary range for this position is $140,000 - $175,000 USD per year.&lt;/p&gt;",
+      "departments": [
+        {
+          "id": 1,
+          "name": "Engineering",
+          "child_ids": [],
+          "parent_id": null
+        }
+      ],
+      "offices": [
+        {
+          "id": 9,
+          "name": "San Francisco, CA",
+          "location": "San Francisco, CA",
+          "child_ids": [],
+          "parent_id": null
+        }
+      ]
+    },
+    {
+      "id": 4001002,
+      "internal_job_id": 4000002,
+      "title": "Data Engineer",
+      "updated_at": "2026-10-17T12:30:00-04:00",
+      "requisition_id": "R1002",
+      "location": {
+        "name": "Remote - US"
+      },
+      "absolute_url": "https://job-boards.greenhouse.io/examplecorp/jobs/4001002",
+      "language": "en",
+      "metadata": null,
+      "company_name": "ExampleCorp",
+      "content": "&lt;h2&gt;About the role&lt;/h2&gt;&lt;p&gt;Build APIs for our scheduling product.&lt;/p&gt;&lt;h3&gt;Requirements&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;3+ years of experience with SQL and Spark&lt;/li&gt;&lt;li&gt;Experience with PostgreSQL&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;Nice to have&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Experience with Kubernetes&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;The salary range for this position is $140,000 - $175,000 USD per year.&lt;/p&gt;",
+      "departments": [
+        {
+          "id": 1,
+          "name": "Engineering",
+          "child_ids": [],
+          "parent_id": null
+        }
+      ],
+      "offices": [
+        {
+          "id": 9,
+          "name": "Remote - US",
+          "location": "Remote - US",
+          "child_ids": [],
+          "parent_id": null
+        }
+      ]
+    },
+    {
+      "id": 4001003,
+      "internal_job_id": 4000003,
+      "title": "Frontend Engineer",
+      "updated_at": "2026-10-17T12:30:00-04:00",
+      "requisition_id": "R1003",
+      "location": {
+        "name": "New York, NY"
+      },
+      "absolute_url": "https://job-boards.greenhouse.io/examplecorp/jobs/4001003",
+      "language": "en",
+      "metadata": null,
+      "first_published": "2026-10-15T09:00:00-04:00",
+      "company_name": "ExampleCorp",
+      "content": "&lt;h2&gt;About the role&lt;/h2&gt;&lt;p&gt;Build APIs for our scheduling product.&lt;/p&gt;&lt;h3&gt;Requirements&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;3+ years of experience with TypeScript and React&lt;/li&gt;&lt;li&gt;Experience with PostgreSQL&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;Nice to have&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Experience with Kubernetes&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;The salary range for this position is $140,000 - $175,000 USD per year.&lt;/p&gt;",
+      "departments": [
+        {
+          "id": 1,
+          "name": "Engineering",
+          "child_ids": [],
+          "parent_id": null
+        }
+      ],
+      "offices": [
+        {
+          "id": 9,
+          "name": "New York, NY",
+          "location": "New York, NY",
+          "child_ids": [],
+          "parent_id": null
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "total": 3
+  }
+}

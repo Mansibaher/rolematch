@@ -1,0 +1,38 @@
+{
+  "id": "0000aaaa-bbbb-4ccc-8ddd-000000000000",
+  "text": "Software Engineer 0",
+  "categories": {
+    "location": "Austin, TX",
+    "commitment": "Full-time",
+    "team": "Engineering",
+    "department": "R&D",
+    "allLocations": [
+      "Austin, TX"
+    ]
+  },
+  "country": "US",
+  "workplaceType": "hybrid",
+  "createdAt": 1760000000000,
+  "description": "<div>Exampleco builds delivery software.</div>",
+  "descriptionPlain": "Exampleco builds delivery software.",
+  "lists": [
+    {
+      "text": "Requirements",
+      "content": "<li>2+ years of Go or Java</li><li>Experience with Kafka</li>"
+    },
+    {
+      "text": "Nice to have",
+      "content": "<li>Experience with AWS</li>"
+    }
+  ],
+  "additional": "<div>We are an equal opportunity employer.</div>",
+  "additionalPlain": "We are an equal opportunity employer.",
+  "hostedUrl": "https://jobs.lever.co/exampleco/0000aaaa-bbbb-4ccc-8ddd-000000000000",
+  "applyUrl": "https://jobs.lever.co/exampleco/0000aaaa-bbbb-4ccc-8ddd-000000000000/apply",
+  "salaryRange": {
+    "currency": "USD",
+    "interval": "per-year-salary",
+    "min": 120000,
+    "max": 150000
+  }
+}

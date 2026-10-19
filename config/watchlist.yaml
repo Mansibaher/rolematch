@@ -1,0 +1,25 @@
+# Company watchlist: the ONLY employers RoleMatch queries automatically.
+#
+# RoleMatch does not search the whole job market. Each entry is one employer's public job board on a
+# supported ATS. Find a board identifier from the employer's careers page URL:
+#   Greenhouse: https://boards.greenhouse.io/<token>  or  https://job-boards.greenhouse.io/<token>
+#               check it at https://boards-api.greenhouse.io/v1/boards/<token>/jobs
+#   Lever:      https://jobs.lever.co/<site>   (EU boards: jobs.eu.lever.co -> region: eu)
+#               check it at https://api.lever.co/v0/postings/<site>?mode=json
+#
+# Entries are loaded with `python -m app.cli sync-watchlist` (also run by `make seed`). Users can add more
+# companies from the "Companies & sources" page; those are stored in the database.
+#
+# The identifiers below are EXAMPLES that have not been verified from this build environment. They are
+# disabled by default: confirm each URL in a browser, then set enabled: true.
+
+sources:
+  - kind: greenhouse
+    identifier: examplecorp
+    employer_name: ExampleCorp (replace me)
+    enabled: false
+  - kind: lever
+    identifier: exampleco
+    employer_name: Exampleco (replace me)
+    region: us
+    enabled: false

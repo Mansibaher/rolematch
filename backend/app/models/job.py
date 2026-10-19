@@ -87,6 +87,10 @@ class Job(UUIDPk, Timestamps, Base):
         Index("ix_jobs_search_tsv", "search_tsv", postgresql_using="gin"),
         Index("ix_jobs_canonical_url", "canonical_url"),
         Index("ix_jobs_status", "status"),
+        Index(
+            "ix_jobs_embedding_hnsw", "embedding", postgresql_using="hnsw",
+            postgresql_ops={"embedding": "vector_cosine_ops"},
+        ),
     )
 
     source_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("job_sources.id", ondelete="CASCADE"), index=True)

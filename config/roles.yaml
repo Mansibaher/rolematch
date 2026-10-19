@@ -1,0 +1,34 @@
+# Role families used for preferences and soft ranking. Patterns are case-insensitive regexes over job titles.
+# Add families or patterns freely; ids are referenced from user preferences.
+families:
+  - id: software_engineer
+    name: Software engineer
+    title_patterns: ['software (development )?engineer', '\bswe\b', 'software developer', 'full[- ]?stack', 'application engineer', 'product engineer', 'member of technical staff']
+  - id: backend_engineer
+    name: Backend engineer
+    title_patterns: ['back[- ]?end', 'platform engineer', 'api engineer', 'server[- ]side', 'distributed systems engineer', 'infrastructure engineer']
+  - id: ml_engineer
+    name: Applied AI/ML engineer
+    title_patterns: ['machine learning', '\bml\b', '\bai\b', 'applied scientist', 'deep learning', '\bnlp\b', 'computer vision', 'llm', 'research engineer', 'mlops']
+  - id: data_engineer
+    name: Data engineer
+    title_patterns: ['data engineer', 'analytics engineer', 'etl', 'data platform', 'data infrastructure', 'big data']
+  - id: frontend_engineer
+    name: Frontend engineer
+    title_patterns: ['front[- ]?end', '\bui engineer\b', 'web developer', 'react developer']
+  - id: data_scientist
+    name: Data scientist
+    title_patterns: ['data scientist', 'data science', 'quantitative analyst']
+  - id: devops_sre
+    name: DevOps / SRE
+    title_patterns: ['devops', 'site reliability', '\bsre\b', 'cloud engineer', 'reliability engineer']
+  - id: mobile_engineer
+    name: Mobile engineer
+    title_patterns: ['\bios\b', 'android', 'mobile engineer', 'mobile developer']
+  # Non-engineering / other families, so their titles are classified (and can be filtered) rather than "unknown".
+  - id: product_manager
+    name: Product manager
+    title_patterns: ['product manag', '\bpm\b', 'product owner', 'program manag']
+  - id: embedded_engineer
+    name: Embedded / firmware engineer
+    title_patterns: ['embedded', 'firmware', 'hardware engineer']

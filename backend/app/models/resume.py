@@ -63,6 +63,8 @@ class ResumeVersion(UUIDPk, Timestamps, Base):
     evidence_eligible: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     tailored_for_job_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("jobs.id", ondelete="SET NULL"))
     tailoring_record: Mapped[dict | None] = mapped_column(JSONB)
+    # Cached embeddings of profile items for semantic matching: {"model": str, "key": str, "items": {id: b64}}
+    embedding_cache: Mapped[dict | None] = mapped_column(JSONB)
 
     resume: Mapped[Resume] = relationship(back_populates="versions")
     entries: Mapped[list[ProfileEntry]] = relationship(back_populates="version", cascade="all, delete-orphan", order_by="ProfileEntry.position")

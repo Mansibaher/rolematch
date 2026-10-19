@@ -1,0 +1,64 @@
+# RoleMatch scoring configuration.
+#
+# Scores are documented alignment indices on a 0–100 scale. They are NOT probabilities of an interview,
+# online assessment or offer, and they are not "ATS scores". See docs/DESIGN.md for the full method.
+
+qualification:
+  # Weights for the Qualification match index. Components that cannot be computed for a job
+  # (e.g. a posting with no preferred qualifications) are dropped and the remaining weights renormalised.
+  weights:
+    required_coverage: 0.50    # share of required qualifications supported by resume evidence
+    preferred_coverage: 0.15   # share of preferred qualifications supported
+    evidence_depth: 0.20       # how directly matched skills are demonstrated (employment > project > listed)
+    seniority: 0.15            # compatibility of documented experience with the role's level
+
+  # Credit per requirement status when computing coverage.
+  status_credit:
+    supported: 1.0
+    partially_supported: 0.5
+    unclear: 0.5               # neutral: we could not check it either way
+    not_evidenced: 0.0         # no evidence in the resume (which does not prove the skill is missing)
+
+  # Strength of skill evidence by where it appears in the resume.
+  evidence_strength:
+    employment: 1.0
+    project: 0.75
+    user_added: 0.7            # added and verified by the user, not shown in resume text
+    education: 0.5             # coursework / thesis mentions
+    activity: 0.5
+    skills: 0.5                # listed in a skills section only
+    summary: 0.5
+    other: 0.4
+  implied_factor: 0.5          # evidence via taxonomy implication (e.g. PostgreSQL -> SQL) is discounted
+
+  # Mix inside evidence_depth: lexical evidence strength vs. semantic similarity of resume and posting.
+  depth_semantic_share: 0.3
+
+semantic:
+  # Cosine similarity (all-MiniLM-L6-v2) above which a resume line is shown as "related experience" for a
+  # requirement that has no explicit evidence. Semantic similarity never marks a requirement as supported.
+  related_threshold: 0.55
+  # Mapping of job↔profile cosine similarity onto 0..1 for evidence_depth.
+  profile_sim_floor: 0.15
+  profile_sim_ceiling: 0.65
+
+priority:
+  # Application priority = weighted mix of qualification match, preference fit and posting freshness.
+  # Freshness is kept separate from qualification fit and only enters here.
+  weights:
+    qualification: 0.65
+    preference_fit: 0.20
+    freshness: 0.15
+  freshness_half_life_days: 10
+  # Multiplier applied to freshness when the job has not been re-verified within stale_after_hours.
+  unverified_freshness_factor: 0.6
+
+feedback:
+  # "Relevant / not relevant" feedback nudges preference fit only, within these bounds.
+  step: 0.05
+  max_abs_adjustment: 0.15
+
+retrieval:
+  # Candidate generation before evidence-based reranking.
+  lexical_top_n: 300
+  semantic_top_n: 300
