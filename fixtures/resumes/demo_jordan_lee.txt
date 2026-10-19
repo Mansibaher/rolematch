@@ -1,0 +1,44 @@
+Jordan Lee
+SYNTHETIC DEMO RESUME — fictional person for RoleMatch demos
+jordan.lee@example.com | (555) 010-0199 | github.com/example-jordan | Los Angeles, CA
+
+EDUCATION
+California Institute of Demo Studies  Los Angeles, CA
+Master of Science in Computer Science, GPA 3.8/4.0  Aug 2023 – May 2025
+Northfield University  Pune, India
+Bachelor of Engineering in Computer Engineering  Aug 2016 – May 2020
+
+EXPERIENCE
+Graduate Research Assistant  Jan 2024 – May 2025
+Demo Institute Machine Learning Lab  Los Angeles, CA
+• Benchmarked 6 time-series classification models on a 2.1M-row wearable sensor dataset using PyTorch and scikit-learn
+• Built a reproducible evaluation harness in Python with pandas, cutting experiment setup time from 2 days to 3 hours
+• Applied SHAP to explain model predictions and presented findings at the lab's weekly research review
+Software Engineer Intern  Jun 2024 – Aug 2024
+Brightpath Logistics Inc.  Remote
+• Designed and shipped REST APIs in Python (FastAPI) backed by PostgreSQL for a shipment-tracking service
+• Added Redis caching to the hottest read endpoint, reducing p95 latency from 420 ms to 180 ms
+• Wrote pytest integration tests and a GitHub Actions CI pipeline running on every pull request
+Software Engineer  Jul 2020 – Jun 2023
+Kestrel Data Systems Pvt. Ltd.  Pune, India
+• Developed Java Spring Boot microservices for an invoicing platform serving 40 enterprise clients
+• Migrated batch reporting jobs from cron scripts to Airflow DAGs writing to PostgreSQL
+• Containerized services with Docker and deployed them to AWS EC2 behind Nginx
+• Participated in code reviews and on-call rotation for production incidents
+
+PROJECTS
+ClosetWise — AI Outfit Planner | Next.js, TypeScript, FastAPI, PostgreSQL  Mar 2025
+• Built a full-stack outfit planner with a Next.js frontend and a FastAPI backend
+• Implemented image-based clothing tagging with a pretrained computer vision model
+Knowledge Copilot | Python, sentence embeddings, pgvector  Dec 2024
+• Built a retrieval-augmented generation prototype over course notes using sentence embeddings and pgvector
+• Evaluated retrieval quality with a hand-labeled set of 50 questions
+
+TECHNICAL SKILLS
+Languages: Python, Java, TypeScript, JavaScript, SQL
+Frameworks: FastAPI, Spring Boot, React, Next.js, PyTorch, scikit-learn, pandas
+Tools: PostgreSQL, Redis, Docker, AWS, Git, Airflow, Linux
+
+LEADERSHIP
+Orientation Leader, California Institute of Demo Studies  Aug 2023 – Sep 2023
+• Guided 30 incoming graduate students through campus onboarding

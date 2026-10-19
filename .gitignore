@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+var/
+.env
+node_modules/
+.next/
+frontend/test-results/
+frontend/playwright-report/
+models/*/model*.safetensors
+models/*/tokenizer.json
+!models/README.md
+eval/results/*.tmp

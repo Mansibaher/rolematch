@@ -1,0 +1,549 @@
+# Skill taxonomy used for resume and job-description matching.
+#
+# Each skill has a canonical id, a display name, a category and the surface forms that count as a mention.
+#   aliases         – plain strings; matched case-insensitively with technical word boundaries
+#                     (a boundary is anything that is not a letter, digit, "_", "+" or "#").
+#   patterns        – raw regular expressions for forms that need lookarounds (e.g. Java vs JavaScript).
+#   case_sensitive  – match aliases/patterns case-sensitively (needed for "Go", "C", "R", "ML").
+#   ambiguous       – the surface form has common non-technical meanings; mentions are reported with
+#                     lower extraction confidence.
+#   implies         – evidence for this skill is *partial* evidence for the listed skills
+#                     (e.g. PostgreSQL experience partially supports a generic "SQL" requirement).
+#                     Implication is never treated as full support.
+#   distinct_from   – documentation of near-collisions that must NOT be merged; covered by tests.
+#
+# Edit freely; ids must stay stable once resumes have been parsed (re-parse after renaming).
+
+skills:
+  # ---------------- Languages ----------------
+  - id: python
+    name: Python
+    category: language
+    aliases: [python, python3]
+  - id: java
+    name: Java
+    category: language
+    patterns: ['(?i)(?<![\w+#.-])java(?!\s*script)(?![\w+#])']
+    distinct_from: [javascript]
+  - id: javascript
+    name: JavaScript
+    category: language
+    aliases: [javascript, ecmascript, es6]
+    patterns: ['(?<![\w+#.-])JS(?![\w+#])']
+    distinct_from: [java, typescript]
+  - id: typescript
+    name: TypeScript
+    category: language
+    aliases: [typescript]
+    patterns: ['(?<![\w+#.-])TS(?![\w+#])']
+    implies: [javascript]
+  - id: go
+    name: Go
+    category: language
+    patterns:
+      - '(?i)(?<![\w+#.-])golang(?![\w+#])'
+      - '(?<![\w+#.-])Go(?![\w+#-])(?!\s+(?:to|beyond|above|live|from|back|through|deep|out|into|over|with|ahead|far|for|the|a|an|on|in|by|get)\b)'
+    case_sensitive: true
+    ambiguous: true
+  - id: rust
+    name: Rust
+    category: language
+    aliases: [rust]
+  - id: c
+    name: C
+    category: language
+    patterns: ['(?<![\w+#./-])(?<!Series )(?<!series )C(?![\w+#])(?!\s*\+\+)(?!\s*#)(?!-level)(?!-suite)']
+    case_sensitive: true
+    ambiguous: true
+    distinct_from: [cpp, csharp]
+  - id: cpp
+    name: C++
+    category: language
+    patterns: ['(?i)(?<![\w+#])c\+\+(?![\w+#])', '(?i)(?<![\w+#])cpp(?![\w+#])']
+    distinct_from: [c, csharp]
+  - id: csharp
+    name: C#
+    category: language
+    patterns: ['(?i)(?<![\w+#])c#(?![\w+#])', '(?i)(?<![\w+#])c\s?sharp(?![\w+#])']
+    distinct_from: [c, cpp]
+  - id: kotlin
+    name: Kotlin
+    category: language
+    aliases: [kotlin]
+  - id: scala
+    name: Scala
+    category: language
+    aliases: [scala]
+  - id: swift
+    name: Swift
+    category: language
+    patterns: ['(?<![\w+#.-])Swift(?![\w+#])(?! payments)(?! code)']
+    case_sensitive: true
+    ambiguous: true
+  - id: ruby
+    name: Ruby
+    category: language
+    aliases: [ruby]
+  - id: php
+    name: PHP
+    category: language
+    aliases: [php]
+  - id: r_lang
+    name: R
+    category: language
+    patterns: ['(?<![\w+#./-])R(?![\w+#&/-])(?=\s*(?:,|;|/|\)|and\b|or\b|programming|language|$))']
+    case_sensitive: true
+    ambiguous: true
+  - id: sql
+    name: SQL
+    category: language
+    aliases: [sql]
+    patterns: ['(?i)(?<![\w+#])t-sql(?![\w+#])']
+    distinct_from: [nosql]
+  - id: bash
+    name: Bash / shell scripting
+    category: language
+    aliases: [bash, shell scripting, shell scripts, zsh]
+  - id: matlab
+    name: MATLAB
+    category: language
+    aliases: [matlab]
+
+  # ---------------- Web & backend frameworks ----------------
+  - id: react
+    name: React
+    category: framework
+    aliases: [react.js, reactjs]
+    # Case-sensitive so "react to incidents" is not a skill mention.
+    patterns: ['(?<![\w+#.-])React(?![\w+#])(?!\s+Native)']
+    implies: [javascript]
+    distinct_from: [react_native]
+  - id: react_native
+    name: React Native
+    category: framework
+    aliases: [react native]
+    implies: [javascript]
+  - id: nextjs
+    name: Next.js
+    category: framework
+    aliases: [next.js, nextjs]
+    implies: [react, javascript]
+  - id: vue
+    name: Vue.js
+    category: framework
+    aliases: [vue, vue.js, vuejs]
+    implies: [javascript]
+  - id: angular
+    name: Angular
+    category: framework
+    aliases: [angular, angularjs]
+    implies: [javascript]
+  - id: nodejs
+    name: Node.js
+    category: framework
+    aliases: [node.js, nodejs, node js]
+    implies: [javascript]
+  - id: express
+    name: Express
+    category: framework
+    aliases: [express.js, expressjs]
+    implies: [nodejs]
+  - id: django
+    name: Django
+    category: framework
+    aliases: [django]
+    implies: [python]
+  - id: flask
+    name: Flask
+    category: framework
+    aliases: [flask]
+    implies: [python]
+  - id: fastapi
+    name: FastAPI
+    category: framework
+    aliases: [fastapi]
+    implies: [python, rest_api]
+  - id: spring
+    name: Spring / Spring Boot
+    category: framework
+    aliases: [spring boot, springboot, spring framework]
+    implies: [java]
+  - id: dotnet
+    name: .NET
+    category: framework
+    patterns: ['(?i)(?<![\w])\.net(?![\w])', '(?i)(?<![\w+#])asp\.net(?![\w+#])']
+    implies: [csharp]
+  - id: rails
+    name: Ruby on Rails
+    category: framework
+    aliases: [ruby on rails, rails]
+    implies: [ruby]
+  - id: graphql
+    name: GraphQL
+    category: framework
+    aliases: [graphql]
+  - id: grpc
+    name: gRPC
+    category: framework
+    aliases: [grpc, protobuf, protocol buffers]
+  - id: rest_api
+    name: REST APIs
+    category: practice
+    aliases: [restful, rest api, rest apis, restful api, restful apis, restful services]
+  - id: tailwind
+    name: Tailwind CSS
+    category: framework
+    aliases: [tailwind, tailwind css, tailwindcss]
+  - id: html_css
+    name: HTML/CSS
+    category: framework
+    aliases: [html, css, html5, css3]
+
+  # ---------------- Data stores ----------------
+  - id: postgresql
+    name: PostgreSQL
+    category: database
+    aliases: [postgresql, postgres, psql]
+    implies: [sql, relational_databases]
+  - id: mysql
+    name: MySQL
+    category: database
+    aliases: [mysql, mariadb]
+    implies: [sql, relational_databases]
+  - id: sqlite
+    name: SQLite
+    category: database
+    aliases: [sqlite]
+    implies: [sql]
+  - id: oracle_db
+    name: Oracle Database
+    category: database
+    aliases: [oracle database, oracle db, pl/sql]
+    implies: [sql, relational_databases]
+  - id: sql_server
+    name: SQL Server
+    category: database
+    aliases: [sql server, mssql]
+    implies: [sql, relational_databases]
+  - id: relational_databases
+    name: Relational databases
+    category: database
+    aliases: [relational database, relational databases, rdbms]
+  - id: nosql
+    name: NoSQL
+    category: database
+    aliases: [nosql, no-sql]
+    distinct_from: [sql]
+  - id: mongodb
+    name: MongoDB
+    category: database
+    aliases: [mongodb, mongo]
+    implies: [nosql]
+  - id: redis
+    name: Redis
+    category: database
+    aliases: [redis]
+  - id: cassandra
+    name: Cassandra
+    category: database
+    aliases: [cassandra]
+    implies: [nosql]
+  - id: dynamodb
+    name: DynamoDB
+    category: database
+    aliases: [dynamodb]
+    implies: [nosql, aws]
+  - id: elasticsearch
+    name: Elasticsearch
+    category: database
+    aliases: [elasticsearch, opensearch, elastic search]
+  - id: pgvector
+    name: pgvector
+    category: database
+    aliases: [pgvector]
+    implies: [postgresql, vector_databases]
+  - id: vector_databases
+    name: Vector databases
+    category: database
+    aliases: [vector database, vector databases, vector db, vector store, pinecone, weaviate, faiss, milvus, qdrant, chroma]
+
+  # ---------------- Cloud & infrastructure ----------------
+  - id: aws
+    name: AWS
+    category: cloud
+    aliases: [aws, amazon web services, ec2, s3, aws lambda]
+  - id: gcp
+    name: Google Cloud
+    category: cloud
+    aliases: [gcp, google cloud, google cloud platform, bigquery]
+  - id: azure
+    name: Azure
+    category: cloud
+    aliases: [azure, microsoft azure]
+  - id: docker
+    name: Docker
+    category: devops
+    aliases: [docker, docker compose, docker-compose, dockerfile]
+    implies: [containers]
+  - id: kubernetes
+    name: Kubernetes
+    category: devops
+    aliases: [kubernetes, k8s, eks, gke, aks, helm]
+    implies: [containers]
+  - id: containers
+    name: Containers
+    category: devops
+    aliases: [containers, containerization, containerized]
+  - id: terraform
+    name: Terraform
+    category: devops
+    aliases: [terraform]
+    implies: [infrastructure_as_code]
+  - id: infrastructure_as_code
+    name: Infrastructure as code
+    category: devops
+    aliases: [infrastructure as code, iac, cloudformation, pulumi]
+  - id: ci_cd
+    name: CI/CD
+    category: devops
+    aliases: [ci/cd, ci cd, cicd, continuous integration, continuous delivery, continuous deployment, github actions, jenkins, gitlab ci, circleci]
+  - id: linux
+    name: Linux
+    category: devops
+    aliases: [linux, unix]
+  - id: git
+    name: Git
+    category: devops
+    aliases: [git, github, gitlab, version control]
+  - id: kafka
+    name: Kafka
+    category: data
+    aliases: [kafka, apache kafka]
+    implies: [stream_processing]
+  - id: rabbitmq
+    name: RabbitMQ
+    category: devops
+    aliases: [rabbitmq, message queue, message queues, sqs, pub/sub]
+  - id: celery
+    name: Celery
+    category: framework
+    aliases: [celery]
+    implies: [python]
+  - id: observability
+    name: Observability / monitoring
+    category: devops
+    aliases: [observability, monitoring, prometheus, grafana, datadog, opentelemetry, logging and monitoring]
+  - id: nginx
+    name: Nginx
+    category: devops
+    aliases: [nginx]
+
+  # ---------------- Engineering practices & concepts ----------------
+  - id: distributed_systems
+    name: Distributed systems
+    category: concept
+    aliases: [distributed systems, distributed system, distributed computing]
+  - id: microservices
+    name: Microservices
+    category: concept
+    aliases: [microservices, microservice, micro-services, service-oriented architecture, soa]
+  - id: system_design
+    name: System design
+    category: concept
+    aliases: [system design, systems design, software architecture, scalable systems, scalable architecture]
+  - id: data_structures_algorithms
+    name: Data structures & algorithms
+    category: concept
+    aliases: [data structures, algorithms, data structures and algorithms, dsa]
+  - id: oop
+    name: Object-oriented programming
+    category: concept
+    aliases: [object-oriented, object oriented, oop, object-oriented programming, object-oriented design]
+  - id: testing
+    name: Automated testing
+    category: practice
+    aliases: [unit testing, unit tests, integration tests, integration testing, automated testing, test-driven development, tdd, pytest, junit, jest, playwright, selenium, cypress]
+  - id: api_design
+    name: API design
+    category: practice
+    aliases: [api design, designing apis, api development, backend apis, web apis]
+  - id: concurrency
+    name: Concurrency
+    category: concept
+    aliases: [concurrency, multithreading, multi-threading, asynchronous programming, async programming, parallel programming]
+  - id: caching
+    name: Caching
+    category: concept
+    aliases: [caching, cache]
+  - id: security
+    name: Application security
+    category: practice
+    aliases: [application security, secure coding, authentication, authorization, oauth, owasp]
+  - id: agile
+    name: Agile
+    category: practice
+    aliases: [agile, scrum, kanban]
+  - id: code_review
+    name: Code review
+    category: practice
+    aliases: [code review, code reviews]
+
+  # ---------------- Data engineering ----------------
+  - id: etl
+    name: ETL / data pipelines
+    category: data
+    aliases: [etl, elt, data pipeline, data pipelines, data ingestion, ingestion pipelines, ingestion pipeline]
+  - id: spark
+    name: Apache Spark
+    category: data
+    aliases: [spark, apache spark, pyspark, spark sql]
+    implies: [big_data]
+  - id: hadoop
+    name: Hadoop
+    category: data
+    aliases: [hadoop, hdfs, hive, mapreduce]
+    implies: [big_data]
+  - id: big_data
+    name: Big data
+    category: data
+    aliases: [big data, large-scale data, large scale data]
+  - id: airflow
+    name: Airflow
+    category: data
+    aliases: [airflow, apache airflow, dagster, prefect, workflow orchestration]
+    implies: [etl]
+  - id: dbt
+    name: dbt
+    category: data
+    patterns: ['(?<![\w+#.-])dbt(?![\w+#])']
+    case_sensitive: true
+    implies: [etl, sql]
+  - id: data_warehousing
+    name: Data warehousing
+    category: data
+    aliases: [data warehouse, data warehousing, data warehouses, snowflake, redshift, data lake, lakehouse, databricks]
+  - id: data_modeling
+    name: Data modeling
+    category: data
+    aliases: [data modeling, data modelling, dimensional modeling, schema design]
+  - id: stream_processing
+    name: Stream processing
+    category: data
+    aliases: [stream processing, streaming data, real-time data, flink, kinesis, spark streaming]
+  - id: pandas
+    name: pandas
+    category: data
+    aliases: [pandas]
+    implies: [python, data_analysis]
+  - id: numpy
+    name: NumPy
+    category: data
+    aliases: [numpy]
+    implies: [python]
+  - id: data_analysis
+    name: Data analysis
+    category: data
+    aliases: [data analysis, data analytics, exploratory data analysis, eda]
+  - id: data_visualization
+    name: Data visualization
+    category: data
+    aliases: [data visualization, data visualisation, tableau, power bi, matplotlib, plotly, seaborn, d3.js, dashboards]
+  - id: time_series
+    name: Time-series analysis
+    category: data
+    aliases: [time series, time-series, forecasting, time-series analysis, time series analysis]
+  - id: statistics
+    name: Statistics
+    category: data
+    aliases: [statistics, statistical analysis, statistical modeling, hypothesis testing, a/b testing, ab testing, experimentation]
+
+  # ---------------- ML / AI ----------------
+  - id: machine_learning
+    name: Machine learning
+    category: ml
+    aliases: [machine learning, machine-learning]
+    patterns: ['(?<![\w+#.-])ML(?![\w+#])(?!-)']
+  - id: deep_learning
+    name: Deep learning
+    category: ml
+    aliases: [deep learning, neural networks, neural network]
+    implies: [machine_learning]
+  - id: pytorch
+    name: PyTorch
+    category: ml
+    aliases: [pytorch, torch]
+    implies: [deep_learning, machine_learning, python]
+  - id: tensorflow
+    name: TensorFlow
+    category: ml
+    aliases: [tensorflow, keras, tf.keras]
+    implies: [deep_learning, machine_learning]
+  - id: scikit_learn
+    name: scikit-learn
+    category: ml
+    aliases: [scikit-learn, sklearn, scikit learn]
+    implies: [machine_learning, python]
+  - id: xgboost
+    name: Gradient boosting (XGBoost/LightGBM)
+    category: ml
+    aliases: [xgboost, lightgbm, catboost, gradient boosting]
+    implies: [machine_learning]
+  - id: nlp
+    name: NLP
+    category: ml
+    aliases: [nlp, natural language processing, text classification, named entity recognition]
+    implies: [machine_learning]
+  - id: computer_vision
+    name: Computer vision
+    category: ml
+    aliases: [computer vision, image classification, object detection, image segmentation, opencv]
+    implies: [machine_learning]
+  - id: llm
+    name: LLMs
+    category: ml
+    aliases: [llm, llms, large language model, large language models, generative ai, genai, gpt, prompt engineering, fine-tuning, fine tuning]
+    implies: [nlp, machine_learning]
+  - id: rag
+    name: Retrieval-augmented generation
+    category: ml
+    aliases: [rag, retrieval-augmented generation, retrieval augmented generation]
+    implies: [llm]
+  - id: embeddings
+    name: Embeddings / semantic search
+    category: ml
+    aliases: [embeddings, sentence embeddings, semantic search, vector search, sentence-transformers, sentence transformers]
+    implies: [machine_learning]
+  - id: transformers_hf
+    name: Hugging Face Transformers
+    category: ml
+    aliases: [hugging face, huggingface, transformers library]
+    implies: [deep_learning, nlp]
+  - id: mlops
+    name: MLOps
+    category: ml
+    aliases: [mlops, ml ops, model deployment, model serving, mlflow, kubeflow, sagemaker, vertex ai, model monitoring]
+    implies: [machine_learning]
+  - id: explainable_ai
+    name: Explainable AI
+    category: ml
+    aliases: [explainable ai, xai, shap, lime, model interpretability, interpretability]
+    implies: [machine_learning]
+  - id: model_evaluation
+    name: Model evaluation & benchmarking
+    category: ml
+    aliases: [model evaluation, benchmarking, evaluation metrics, offline evaluation, cross-validation]
+    implies: [machine_learning]
+  - id: feature_engineering
+    name: Feature engineering
+    category: ml
+    aliases: [feature engineering, feature extraction]
+    implies: [machine_learning]
+  - id: recommender_systems
+    name: Recommender systems
+    category: ml
+    aliases: [recommender systems, recommendation systems, recommendation engine, ranking systems, learning to rank]
+    implies: [machine_learning]
+  - id: information_retrieval
+    name: Search / information retrieval
+    category: ml
+    aliases: [information retrieval, search ranking, search relevance, full-text search, bm25]
