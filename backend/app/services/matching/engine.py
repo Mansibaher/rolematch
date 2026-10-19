@@ -28,7 +28,7 @@ from app.services.matching.evaluate import evaluate_all
 from app.services.matching.profile import ProfileContext, build_profile
 from app.services.skills import get_taxonomy
 
-ENGINE_VERSION = "4"
+ENGINE_VERSION = "5"
 
 
 class ProfileNotReady(Exception):

@@ -1,0 +1,78 @@
+@import "tailwindcss";
+@import "@fontsource-variable/schibsted-grotesk";
+@import "@fontsource-variable/source-serif-4";
+@import "@fontsource-variable/source-serif-4/wght-italic.css";
+
+@theme {
+  --font-sans: "Schibsted Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-quote: "Source Serif 4 Variable", Georgia, serif;
+
+  --color-paper: #f3f5f4;
+  --color-panel: #ffffff;
+  --color-ink: #16232b;
+  --color-muted: #5a6a72;
+  --color-rule: #d3dcd8;
+  --color-rule-strong: #b7c4bf;
+  --color-pine: #0d6a56;
+  --color-pine-deep: #0a5444;
+  --color-pine-wash: #e2efe9;
+
+  /* Requirement status colours. "Not evidenced" is intentionally neutral, not red. */
+  --color-supported: #0d6a56;
+  --color-partial: #a86b12;
+  --color-partial-wash: #f6ead3;
+  --color-unclear: #6a57a6;
+  --color-unclear-wash: #ebe7f5;
+  --color-absent: #7c8a92;
+  --color-danger: #a33a2c;
+  --color-danger-wash: #f6e3df;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Text quoted from the user's own resume is always set in the serif italic. */
+.quote {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-pine);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Hatched fill marks "unclear": we could not check it either way. */
+.hatch-unclear {
+  background-image: repeating-linear-gradient(135deg, var(--color-unclear) 0 2px, var(--color-unclear-wash) 2px 5px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Tabular figures for numbers that line up (scores, counts, dates in tables) — not globally, since the
+   feature also widens punctuation in this typeface. */
+.num, .tabular-nums {
+  font-variant-numeric: tabular-nums;
+}

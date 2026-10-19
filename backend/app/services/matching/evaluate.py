@@ -354,7 +354,16 @@ def evaluate_requirement(req: dict, prof: ProfileContext, req_vec: np.ndarray | 
                 r.notes.append(note)
             if lvl == "listed":
                 r.notes.append(f"{tax.name(s)} is listed in your skills but not shown in a role or project.")
-        r.evidence = evid[:4]
+        # One line of evidence per distinct resume line (a bullet can mention several requested skills).
+        seen: dict[str, dict] = {}
+        for ev in evid:
+            key = ev["text"]
+            if key in seen:
+                if ev.get("skill") and ev["skill"] not in seen[key]["skill"]:
+                    seen[key]["skill"] += f", {ev['skill']}"
+            else:
+                seen[key] = dict(ev)
+        r.evidence = list(seen.values())[:4]
         strengths = [levels[s][1] for s in skills]
         if req.get("any_of"):
             r.strength = max(strengths)

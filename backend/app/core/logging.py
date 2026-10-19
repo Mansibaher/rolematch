@@ -22,6 +22,8 @@ def redact(text: str) -> str:
 
 class RedactingFilter(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
+        if record.name == "uvicorn.access":
+            return True  # method/path/status only; its formatter needs the original args
         try:
             msg = record.getMessage()
         except Exception:
@@ -38,5 +40,5 @@ def configure_logging(level: int = logging.INFO) -> None:
     root = logging.getLogger()
     root.handlers = [handler]
     root.setLevel(level)
-    for noisy in ("uvicorn.access",):
-        logging.getLogger(noisy).addFilter(RedactingFilter())
+    # Access logs record method, path and status only (no bodies). Uvicorn's access formatter needs the raw
+    # record args, so it is left unfiltered; API paths never contain personal data (only opaque UUIDs).

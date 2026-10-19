@@ -47,6 +47,13 @@ class Check:
         return asdict(self)
 
 
+def _fam_names(ids) -> str:
+    from app.services.matching.requirements import role_families
+
+    names = {f["id"]: f["name"] for f in role_families()}
+    return ", ".join(sorted(names.get(i, i).lower() for i in ids))
+
+
 def is_hard(prefs: Preferences, name: str) -> bool:
     if name in ALWAYS_HARD:
         return True
@@ -114,10 +121,10 @@ def check_job(job: Job, prefs: Preferences, elig: WorkEligibility | None, extrac
                                 "The title did not match any configured role family."))
         elif set(fams) & set(prefs.role_families):
             checks.append(Check("role_family", CHECK_LABELS["role_family"], "pass", is_hard(prefs, "role_family"),
-                                f"Title matches {', '.join(sorted(set(fams) & set(prefs.role_families)))}."))
+                                f"Title matches {_fam_names(set(fams) & set(prefs.role_families))}."))
         else:
             checks.append(Check("role_family", CHECK_LABELS["role_family"], "fail", is_hard(prefs, "role_family"),
-                                f"Title is classified as {', '.join(fams)}, which is not in your role families."))
+                                f"Title looks like {_fam_names(fams)}, which is not one of your roles."))
 
     # Work mode
     modes = set(prefs.remote_modes or [])

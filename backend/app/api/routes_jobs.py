@@ -46,6 +46,8 @@ def job_card(job: Job, res: dict, app_status: str | None, source: JobSource | No
         "excluded_by": res["eligibility"]["excluded_by"],
         "uncertain_hard": res["eligibility"]["uncertain_hard"],
         "deprioritized_by": res["eligibility"]["soft_deprioritized_by"],
+        # One entry per checkable required qualification, in posting order: drives the evidence strip.
+        "required_statuses": [r["status"] for r in reqs if r["kind"] in ("required", "unclear") and r["category"] != "soft"],
         "strengths": top_strengths[:5],
         "gaps": gaps[:3],
         "unknowns": unknowns[:4],
@@ -59,7 +61,7 @@ def job_card(job: Job, res: dict, app_status: str | None, source: JobSource | No
 def _source_label(source: JobSource | None) -> str:
     if source is None:
         return "Unknown source"
-    return {"greenhouse": f"Greenhouse · {source.employer_name}", "lever": f"Lever · {source.employer_name}",
+    return {"greenhouse": f"{source.employer_name} on Greenhouse", "lever": f"{source.employer_name} on Lever",
             "manual": "Added by you", "fixture": "Demo fixture (synthetic)"}.get(source.kind, source.kind)
 
 

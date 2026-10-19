@@ -31,11 +31,15 @@ def _throttle(key: str) -> None:
 
 
 class Credentials(BaseModel):
-    email: EmailStr
+    # Sign-in accepts any address string (e.g. the local demo account on the reserved .local domain);
+    # registration validates the address.
+    email: str = Field(min_length=3, max_length=320)
     password: str = Field(min_length=8, max_length=200)
 
 
-class RegisterBody(Credentials):
+class RegisterBody(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=8, max_length=200)
     display_name: str = Field(default="", max_length=120)
     timezone: str = "UTC"
 
