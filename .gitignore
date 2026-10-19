@@ -10,4 +10,6 @@ frontend/playwright-report/
 models/*/model*.safetensors
 models/*/tokenizer.json
 !models/README.md
+models/*/LICENSE*
 eval/results/*.tmp
+models/*/config.json
