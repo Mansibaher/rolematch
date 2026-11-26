@@ -97,7 +97,16 @@ export function Shell({ children }: { children: ReactNode }) {
           </nav>
         </aside>
         <main id="main" className="min-w-0 px-5 py-7 sm:px-8 lg:px-10">
-          <div className="mx-auto max-w-6xl">{children}</div>
+          <div className="mx-auto max-w-6xl">
+            {user.is_demo && (
+              <p role="note" className="mb-5 inline-flex flex-wrap items-center gap-x-2 gap-y-0.5 rounded-full border border-partial bg-partial-wash px-4 py-1.5 text-base">
+                <span aria-hidden className="inline-block h-2 w-2 rounded-full bg-partial" />
+                <strong className="font-semibold text-ink">Fictional demo profile</strong>
+                <span className="text-muted">· synthetic résumé and job postings</span>
+              </p>
+            )}
+            {children}
+          </div>
         </main>
       </div>
     </UserCtx.Provider>
