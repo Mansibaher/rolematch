@@ -49,7 +49,9 @@ jobs:
         run: pytest
       - name: Cache embedding model
         uses: actions/cache@v4
-        with: { path: models, key: minilm-${{ hashFiles('backend/scripts/fetch_model.py') }} }
+        with:
+          path: models
+          key: minilm-${{ hashFiles('backend/scripts/fetch_model.py') }}
       - name: Fetch embedding model
         run: test -f ../models/all-MiniLM-L6-v2/model.safetensors || python scripts/fetch_model.py
       - name: Embedding parity with sentence-transformers (reference implementation)
@@ -92,7 +94,9 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: "22", cache: npm, cache-dependency-path: frontend/package-lock.json }
       - uses: actions/cache@v4
-        with: { path: models, key: minilm-${{ hashFiles('backend/scripts/fetch_model.py') }} }
+        with:
+          path: models
+          key: minilm-${{ hashFiles('backend/scripts/fetch_model.py') }}
       - name: Backend setup and demo seed
         working-directory: backend
         run: |
